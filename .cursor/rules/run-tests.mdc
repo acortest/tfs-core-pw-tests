@@ -1,0 +1,43 @@
+---
+description: How to run Playwright tests in this project
+alwaysApply: true
+---
+
+# Running Tests
+
+Always run Playwright from the project root. **The browser must be visible** (headed mode): pass `--headed` on the CLI, or use `npm run test:headed`, or `npm run test:graf -- --headed`, so a real browser window opens. Do not run the suite headless when executing tests on behalf of the user unless they explicitly ask for headless.
+
+```bash
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed [path|pattern] [options]
+```
+
+- **Working directory**: `/Users/acortes/git/turnitin_tests_playwright`
+- **Test directory** (configured in `playwright.config.ts`): `src/tests/`
+- **Environment**: load `.env` in the project root; `baseURL` uses `TII_URL`.
+
+## npm scripts
+
+- `npm test` — full suite, **headless** (avoid for interactive runs; prefer `npm run test:headed` or add `-- --headed`)
+- `npm run test:headed` — full suite with visible browser
+- `npm run test:debug` — Playwright inspector (visible)
+- `npm run test:graf` — Graf-related specs (`instructor-graf` filter); add `--headed` if the script does not already pass it: `npm run test:graf -- --headed`
+
+## Examples
+
+Run one spec file:
+
+```bash
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed src/tests/instructor-graf.spec.ts
+```
+
+Run a single test by title (grep):
+
+```bash
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed -g "exact or partial title"
+```
+
+Chromium project (default from config):
+
+```bash
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --project=chromium
+```
