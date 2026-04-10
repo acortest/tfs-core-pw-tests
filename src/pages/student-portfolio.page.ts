@@ -67,8 +67,9 @@ export class StudentPortfolioPage extends BasePage {
 
   async getAssignmentRowText(assignmentTitle: string): Promise<string> {
     const selector = this.ASSIGNMENT_ROW.replace("{title}", assignmentTitle);
-    await this.page.locator(selector).waitFor({ state: "visible", timeout: 60_000 });
-    return this.getText(selector);
+    const loc = this.page.locator(selector).first();
+    await loc.waitFor({ state: "visible", timeout: 60_000 });
+    return this.getText(loc);
   }
 
   async clickViewAssignment(assignmentTitle: string): Promise<void> {
@@ -78,14 +79,19 @@ export class StudentPortfolioPage extends BasePage {
   }
 
   async expandAssignmentInfo(): Promise<void> {
-    const expandBtn = this.page.locator(this.EXPAND_INFO);
-    if ((await expandBtn.count()) > 0) {
-      await expandBtn.click();
+    const strict = this.page.locator(this.EXPAND_INFO);
+    if ((await strict.count()) > 0) {
+      await strict.click();
+      return;
+    }
+    const fallback = this.page.locator("#assignment-heading button");
+    if ((await fallback.count()) > 0) {
+      await fallback.first().click();
     }
   }
 
   async getInstructionsText(): Promise<string> {
-    await this.page.locator(this.INSTRUCTIONS).waitFor({ state: "visible" });
+    await this.page.locator(this.INSTRUCTIONS).waitFor({ state: "visible", timeout: 60_000 });
     return this.getText(this.INSTRUCTIONS);
   }
 }

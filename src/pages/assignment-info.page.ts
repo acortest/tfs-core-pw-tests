@@ -122,7 +122,7 @@ export class AssignmentInfoPage extends BasePage {
         "tr[data-assignment-title], .title-row, .add-assignment-button"
       )
       .first()
-      .waitFor({ state: "visible", timeout: 60_000 });
+      .waitFor({ state: "visible", timeout: 20_000 });
 
     // Read the actual assignment title the server used
     const assignmentRow = this.page.locator("tr[data-assignment-title]");

@@ -5,10 +5,10 @@ alwaysApply: true
 
 # Running Tests
 
-Always run Playwright from the project root. **The browser must be visible** (headed mode): pass `--headed` on the CLI, or use `npm run test:headed`, or `npm run test:graf -- --headed`, so a real browser window opens. Do not run the suite headless when executing tests on behalf of the user unless they explicitly ask for headless.
+Always run Playwright from the project root. **The browser must be visible** (headed mode): pass `--headed` on the CLI, or use `npm run test:headed`, or `npm run test:graf -- --headed`, so a real browser window opens. Do not run the suite headless when executing tests on behalf of the user unless they explicitly ask for headless. **Always enable tracing** by passing `--trace=on` on every run. **Always run tests in parallel with 4 workers** by passing `--workers=4` on every run. **After the test finishes, always open the HTML report** with `npx playwright show-report`.
 
 ```bash
-cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed [path|pattern] [options]
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --trace=on --workers=4 [path|pattern] [options] && npx playwright show-report
 ```
 
 - **Working directory**: `/Users/acortes/git/turnitin_tests_playwright`
@@ -27,17 +27,17 @@ cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed 
 Run one spec file:
 
 ```bash
-cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed src/tests/instructor-graf.spec.ts
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --trace=on --workers=4 src/tests/instructor-graf.spec.ts
 ```
 
 Run a single test by title (grep):
 
 ```bash
-cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed -g "exact or partial title"
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --trace=on --workers=4 -g "exact or partial title"
 ```
 
 Chromium project (default from config):
 
 ```bash
-cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --project=chromium
+cd /Users/acortes/git/turnitin_tests_playwright && npx playwright test --headed --trace=on --workers=4 --project=chromium
 ```

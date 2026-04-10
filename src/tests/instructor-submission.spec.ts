@@ -70,9 +70,7 @@ test.describe("Instructor Paper Assignment @smoke @classic", () => {
     let assignTitle: string;
     let assignInstructions: string;
 
-    await test.step("Wait for assignment start date to pass, then login as student", async () => {
-      // Start date is 2 minutes in the future; wait so the student can see it
-      await turnitin.tModifyAssignment.waitForStartDateToAge(130_000);
+    await test.step("Login as student", async () => {      
       await logoutAndLoginAsStudent();
       await turnitin.sHome.gotoClassHome(testClassId);
       assignTitle = await turnitin.sClassPortfolio.getAssignmentRowText(koreanTitle);
